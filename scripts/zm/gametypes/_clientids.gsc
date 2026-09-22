@@ -51,17 +51,56 @@ function watch_menu_button()
 
     for (;;)
     {
-        if (self MeleeButtonPressed())
+        if (!isdefined(self.menu_open) || !self.menu_open)
         {
-            self thread open_menu();
-
-            while (self MeleeButtonPressed())
+            if (self MeleeButtonPressed())
             {
-                wait 0.1;
+                while (self MeleeButtonPressed())
+                {
+                    wait 0.1;
+                }
+
+                self thread open_menu();
             }
         }
 
         wait 0.05;
+    }
+}
+
+function close_menu()
+{
+	self.menu_open = false;
+
+	if (isdefined(self.menu_title))
+	{
+		self.menu_title destroy();
+		self.menu_title = undefined;
+	}
+
+	if (isdefined(self.menu_option_text))
+	{
+		foreach (option in self.menu_option_text)
+		{
+			if (isdefined(option))
+			{
+			option destroy();
+			}
+		}
+
+		self.menu_option_text = undefined;
+	}
+
+	if (isdefined(self.menu_selector))
+    {
+        self.menu_selector destroy();
+        self.menu_selector = undefined;
+    }
+
+    if (isdefined(self.menu_background))
+    {
+        self.menu_background destroy();
+        self.menu_background = undefined;
     }
 }
 
@@ -80,7 +119,7 @@ function open_menu()
 	self.menu_options = [];
 
 	self.menu_options[0] = "God Mode";
-	self.menu_options[1] = "Give Weapons";
+	self.menu_options[1] = "Spawn Ray Gun";
 
 	self thread create_menu_background();
 	self thread create_menu();
@@ -92,51 +131,58 @@ function open_menu()
 // This function creates the menu title, which is the text that appears at the top of the menu
 function create_menu()
 {
-	self.menu_title = hud::createserverfontstring("objective", 1.25);
-	self.menu_title hud::setpoint("CENTER", "CENTER", 0, -150);
-    self.menu_title setText("ProjectZ Modmenu");
+    self.menu_title = hud::createserverfontstring("objective", 1.3);
+    self.menu_title hud::setpoint("CENTER", "CENTER", 0, -125);
+    self.menu_title setText("^2PROJECTZ");
 }
 
 // This function creates the menu options, which are the text that appears on the screen for each menu option
 function create_menu_options()
 {
-	self.menu_option_text = [];
+    self.menu_option_text = [];
 
-	self.menu_option_text[0] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[0] hud::setpoint("CENTER", "CENTER", 0, -100);
-    self.menu_option_text[0] setText("God Mode");
+    self.menu_option_text[0] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[0] hud::setpoint("CENTER", "CENTER", 0, -75);
+    self.menu_option_text[0] setText("^2God Mode");
 
     self.menu_option_text[1] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[1] hud::setpoint("CENTER", "CENTER", 0, -75);
-    self.menu_option_text[1] setText("Give Weapons");
+    self.menu_option_text[1] hud::setpoint("CENTER", "CENTER", 0, -45);
+    self.menu_option_text[1] setText("Spawn Ray Gun");
 }
 
 function create_menu_background()
 {
-    self.menu_background = hud::createServerIcon("white", 220, 150);
-	self.menu_background hud::setpoint("CENTER", "CENTER", 0, -50);
-	self.menu_background.alpha = 1;
+    self.menu_background = hud::createServerIcon("white", 350, 220);
+    self.menu_background hud::setpoint("CENTER", "CENTER", 0, -40);
+    self.menu_background.alpha = 0.85;
+    self.menu_background.color = (0, 0, 0);
 }
 
 // This function creates the menu selector, which is a ">" symbol that indicates which menu option is currently selected
 function create_menu_selector()
 {
-	self.menu_selector = hud::createserverfontstring("objective", 1.0);
-	self.menu_selector hud::setpoint("CENTER", "CENTER", -80, -100);
-	self.menu_selector setText(">");
+    self.menu_selector = hud::createserverfontstring("objective", 1.0);
+    self.menu_selector hud::setpoint("CENTER", "CENTER", -100, -75);
+    self.menu_selector setText(">");
 }
 
 // This function updates the position of the menu selector based on the currently selected menu option
 function update_menu_selector()
 {
-	if (self.menu_selected == 0)
-	{
-		self.menu_selector hud::setpoint("CENTER", "CENTER", -80, -100);
-	}
-	else if (self.menu_selected == 1)
-	{
-		self.menu_selector hud::setpoint("CENTER", "CENTER", -80, -75);
-	}
+    if (self.menu_selected == 0)
+    {
+        self.menu_option_text[0] setText("^2God Mode");
+        self.menu_option_text[1] setText("Spawn Ray Gun");
+
+        self.menu_selector hud::setpoint("CENTER", "CENTER", -100, -75);
+    }
+    else if (self.menu_selected == 1)
+    {
+        self.menu_option_text[0] setText("God Mode");
+        self.menu_option_text[1] setText("^2Spawn Ray Gun");
+
+        self.menu_selector hud::setpoint("CENTER", "CENTER", -100, -45);
+    }
 }
 
 function menu_navigation()
@@ -145,6 +191,19 @@ function menu_navigation()
 
     while (self.menu_open)
     {
+		// Close menu if player presses melee button again
+		if (self MeleeButtonPressed())
+		{
+			self close_menu();
+
+			while (self MeleeButtonPressed())
+			{
+				wait 0.1;
+			}
+
+			break;
+		}
+
 		// UP = right mouse click
         if (self AdsButtonPressed())
         {
@@ -196,11 +255,12 @@ function menu_navigation()
     }
 }
 
+// This function is called when the player selects a menu option, and it executes the corresponding action
 function select_menu_option()
 {
 	if (self.menu_selected == 0)
 	{
-		if (!isdefined(self.god_mode))
+		if (!isdefined(self.god_mode) || self.god_mode == false)
 		{
 			self.god_mode = true;
 			self EnableInvulnerability();
