@@ -8,7 +8,7 @@ ignore_missing_shipped,core_common
 ignore_missing_shipped,zm_common
 ignore_missing_shipped,zm_patch
 scriptparsetree,scripts\zm\gametypes\_clientids.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_clientids.gsc,1790106049,
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_clientids.gsc,1790108780,
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\scripts\shared\shared.gsh,1786575594,
 rawfile,dummy.cfg
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\dummy.cfg,1786576812,
