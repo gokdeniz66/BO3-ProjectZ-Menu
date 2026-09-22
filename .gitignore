@@ -1,0 +1,45 @@
+# ==============================
+
+# BO3 ProjectZ Mod Menu
+
+# ==============================
+
+# Generated BO3 build/output
+
+zone/
+
+# Logs
+
+*.log
+*.txt
+
+# Temporary / backup files
+
+*.tmp
+*.temp
+*.bak
+*.old
+
+# IDE / editor files
+
+.vscode/
+.idea/
+
+# Windows files
+
+Thumbs.db
+Desktop.ini
+
+# OS/editor swap files
+
+*.swp
+*.swo
+
+# Local configuration
+
+*.user
+*.userprefs
+
+# Crash dumps
+
+*.dmp
