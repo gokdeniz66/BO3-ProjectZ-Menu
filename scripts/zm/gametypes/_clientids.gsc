@@ -10,39 +10,48 @@
 #namespace clientids;
 
 REGISTER_SYSTEM( "clientids", &__init__, undefined )
-	
+
 function __init__()
 {
-	callback::on_start_gametype( &init );
-	callback::on_connect( &on_player_connect );
+    callback::on_start_gametype( &init );
+    callback::on_connect( &on_player_connect );
     callback::on_spawned( &on_player_spawn );
-}	
+}
 
 function init()
 {
-	// this is now handled in code ( not lan )
-	// see s_nextScriptClientId 
-	level.clientid = 0;
+    level.clientid = 0;
 }
 
 function on_player_connect()
 {
-	self.clientid = matchRecordNewPlayer( self );
-	if ( !isdefined( self.clientid ) || self.clientid == -1 )
-	{
-		self.clientid = level.clientid;
-		level.clientid++;	// Is this safe? What if a server runs for a long time and many people join/leave
-	}
-}
+    self.clientid = matchRecordNewPlayer(self);
 
+    if (!isdefined(self.clientid) || self.clientid == -1)
+    {
+        self.clientid = level.clientid;
+        level.clientid++;
+    }
+
+    // Player state
+    self.menu_open = false;
+    self.menu_selected = 0;
+    self.menu_submenu = "main";
+
+    // Feature states
+    self.god_mode = false;
+    self.unlimited_ammo_enabled = false;
+
+    // Start persistent player threads once
+    self thread watch_menu_button();
+    self thread unlimited_ammo();
+}
 
 function on_player_spawn()
 {
     level flag::wait_till("initial_blackscreen_passed");
 
     IPrintLnBold("ProjectZ Modmenu!");
-
-	self thread watch_menu_button();
 }
 
 function watch_menu_button()
@@ -68,30 +77,59 @@ function watch_menu_button()
     }
 }
 
+function open_menu()
+{
+    if (isdefined(self.menu_open) && self.menu_open)
+    {
+        return;
+    }
+
+    self.menu_open = true;
+    self.menu_selected = 0;
+    self.menu_submenu = "main";
+
+    self.menu_options = [];
+
+    self.menu_options[0] = "God Mode";
+    self.menu_options[1] = "Weapons";
+    self.menu_options[2] = "Unlimited Ammo";
+
+    self thread create_menu_background();
+    self thread create_menu();
+    self thread create_menu_options();
+    self thread create_menu_selector();
+
+    wait 0.05;
+
+    self update_menu_selector();
+
+    self thread menu_navigation();
+}
+
 function close_menu()
 {
-	self.menu_open = false;
+    self.menu_open = false;
 
-	if (isdefined(self.menu_title))
-	{
-		self.menu_title destroy();
-		self.menu_title = undefined;
-	}
+    if (isdefined(self.menu_title))
+    {
+        self.menu_title destroy();
+        self.menu_title = undefined;
+    }
 
-	if (isdefined(self.menu_option_text))
-	{
-		foreach (option in self.menu_option_text)
-		{
-			if (isdefined(option))
-			{
-			option destroy();
-			}
-		}
+    if (isdefined(self.menu_option_text))
+    {
+        foreach (option in self.menu_option_text)
+        {
+            if (isdefined(option))
+            {
+                option destroy();
+            }
+        }
 
-		self.menu_option_text = undefined;
-	}
+        self.menu_option_text = undefined;
+    }
 
-	if (isdefined(self.menu_selector))
+    if (isdefined(self.menu_selector))
     {
         self.menu_selector destroy();
         self.menu_selector = undefined;
@@ -104,85 +142,136 @@ function close_menu()
     }
 }
 
-function open_menu() 
-{
-	// if the menu is already open, don't open it again
-	if (isdefined(self.menu_open) && self.menu_open)
-	{
-		return;
-	}
-
-	// set menu open true if player opens menu, this is used to prevent the menu from opening multiple times
-	self.menu_open = true;
-	self.menu_selected = 0;
-
-	self.menu_options = [];
-
-	self.menu_options[0] = "God Mode";
-	self.menu_options[1] = "Spawn Ray Gun";
-
-	self thread create_menu_background();
-	self thread create_menu();
-	self thread create_menu_options();
-	self thread create_menu_selector();
-	self thread menu_navigation();
-}
-
-// This function creates the menu title, which is the text that appears at the top of the menu
 function create_menu()
 {
-    self.menu_title = hud::createserverfontstring("objective", 1.3);
-    self.menu_title hud::setpoint("CENTER", "CENTER", 0, -125);
-    self.menu_title setText("^2PROJECTZ");
+    self.menu_title = hud::createserverfontstring("objective", 1.4);
+    self.menu_title hud::setpoint("RIGHT", "CENTER", -190, -135);
+    self.menu_title setText("^2PROJECTZ MENU");
 }
 
-// This function creates the menu options, which are the text that appears on the screen for each menu option
 function create_menu_options()
 {
     self.menu_option_text = [];
 
     self.menu_option_text[0] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[0] hud::setpoint("CENTER", "CENTER", 0, -75);
-    self.menu_option_text[0] setText("^2God Mode");
+    self.menu_option_text[0] hud::setpoint("RIGHT", "CENTER", -205, -75);
 
     self.menu_option_text[1] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[1] hud::setpoint("CENTER", "CENTER", 0, -45);
-    self.menu_option_text[1] setText("Spawn Ray Gun");
+    self.menu_option_text[1] hud::setpoint("RIGHT", "CENTER", -205, -45);
+
+    self.menu_option_text[2] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[2] hud::setpoint("RIGHT", "CENTER", -205, -15);
+
+    self.menu_option_text[3] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[3] hud::setpoint("RIGHT", "CENTER", -205, 15);
+
+    self.menu_option_text[4] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[4] hud::setpoint("RIGHT", "CENTER", -205, 45);
+
+    self.menu_option_text[5] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[5] hud::setpoint("RIGHT", "CENTER", -205, 75);
+
+    self.menu_option_text[6] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[6] hud::setpoint("RIGHT", "CENTER", -205, 105);
+
+    self.menu_option_text[7] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[7] hud::setpoint("RIGHT", "CENTER", -205, 135);
+
+    self.menu_option_text[8] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[8] hud::setpoint("RIGHT", "CENTER", -205, 165);
+
+    self.menu_option_text[0] setText("God Mode");
+    self.menu_option_text[1] setText("Weapons >");
+    self.menu_option_text[2] setText("Unlimited Ammo");
+
+    self.menu_option_text[3] setText("");
+    self.menu_option_text[4] setText("");
+    self.menu_option_text[5] setText("");
+    self.menu_option_text[6] setText("");
+    self.menu_option_text[7] setText("");
+    self.menu_option_text[8] setText("");
 }
 
 function create_menu_background()
 {
-    self.menu_background = hud::createServerIcon("white", 350, 220);
-    self.menu_background hud::setpoint("CENTER", "CENTER", 0, -40);
-    self.menu_background.alpha = 0.85;
-    self.menu_background.color = (0, 0, 0);
+    self.menu_background = hud::createServerIcon("white", 260, 330);
+    self.menu_background hud::setpoint("RIGHT", "CENTER", -170, 0);
+
+    self.menu_background.alpha = 0.92;
+    self.menu_background.color = (0.02, 0.02, 0.02);
 }
 
-// This function creates the menu selector, which is a ">" symbol that indicates which menu option is currently selected
 function create_menu_selector()
 {
-    self.menu_selector = hud::createserverfontstring("objective", 1.0);
-    self.menu_selector hud::setpoint("CENTER", "CENTER", -100, -75);
-    self.menu_selector setText(">");
+    self.menu_selector = hud::createServerIcon("white", 250, 27);
+    self.menu_selector hud::setpoint("RIGHT", "CENTER", -190, -75);
+
+    self.menu_selector.alpha = 0.25;
+    self.menu_selector.color = (0, 1, 0);
 }
 
-// This function updates the position of the menu selector based on the currently selected menu option
 function update_menu_selector()
 {
-    if (self.menu_selected == 0)
-    {
-        self.menu_option_text[0] setText("^2God Mode");
-        self.menu_option_text[1] setText("Spawn Ray Gun");
-
-        self.menu_selector hud::setpoint("CENTER", "CENTER", -100, -75);
-    }
-    else if (self.menu_selected == 1)
+    if (self.menu_submenu == "main")
     {
         self.menu_option_text[0] setText("God Mode");
-        self.menu_option_text[1] setText("^2Spawn Ray Gun");
+        self.menu_option_text[1] setText("Weapons >");
+        self.menu_option_text[2] setText("Unlimited Ammo");
 
-        self.menu_selector hud::setpoint("CENTER", "CENTER", -100, -45);
+        self.menu_option_text[3] setText("");
+        self.menu_option_text[4] setText("");
+        self.menu_option_text[5] setText("");
+        self.menu_option_text[6] setText("");
+        self.menu_option_text[7] setText("");
+        self.menu_option_text[8] setText("");
+
+        if (self.menu_selected == 0)
+        {
+            self.menu_option_text[0] setText("^2God Mode");
+        }
+        else if (self.menu_selected == 1)
+        {
+            self.menu_option_text[1] setText("^2Weapons >");
+        }
+        else if (self.menu_selected == 2)
+        {
+            self.menu_option_text[2] setText("^2Unlimited Ammo");
+        }
     }
+
+    else if (self.menu_submenu == "weapons")
+    {
+        self.menu_option_text[0] setText("Ray Gun");
+        self.menu_option_text[1] setText("Wunderwaffe DG-2");
+        self.menu_option_text[2] setText("Back");
+
+        self.menu_option_text[3] setText("");
+        self.menu_option_text[4] setText("");
+        self.menu_option_text[5] setText("");
+        self.menu_option_text[6] setText("");
+        self.menu_option_text[7] setText("");
+        self.menu_option_text[8] setText("");
+
+        if (self.menu_selected == 0)
+        {
+            self.menu_option_text[0] setText("^2Ray Gun");
+        }
+        else if (self.menu_selected == 1)
+        {
+            self.menu_option_text[1] setText("^2Wunderwaffe DG-2");
+        }
+        else if (self.menu_selected == 2)
+        {
+            self.menu_option_text[2] setText("^2Back");
+        }
+    }
+
+    self.menu_selector hud::setpoint(
+        "RIGHT",
+        "CENTER",
+        -190,
+        -75 + (self.menu_selected * 30)
+    );
 }
 
 function menu_navigation()
@@ -191,20 +280,19 @@ function menu_navigation()
 
     while (self.menu_open)
     {
-		// Close menu if player presses melee button again
-		if (self MeleeButtonPressed())
-		{
-			self close_menu();
+        // MELEE = CLOSE
+        if (self meleeButtonPressed())
+        {
+            while (self meleeButtonPressed())
+            {
+                wait 0.1;
+            }
 
-			while (self MeleeButtonPressed())
-			{
-				wait 0.1;
-			}
+            self close_menu();
+            break;
+        }
 
-			break;
-		}
-
-		// UP = right mouse click
+        // ADS = UP
         if (self AdsButtonPressed())
         {
             self.menu_selected--;
@@ -222,7 +310,7 @@ function menu_navigation()
             }
         }
 
-		// DOWN = left mouse click
+        // ATTACK = DOWN
         if (self AttackButtonPressed())
         {
             self.menu_selected++;
@@ -240,7 +328,7 @@ function menu_navigation()
             }
         }
 
-		// F key = choose selected option
+        // USE = SELECT
         if (self UseButtonPressed())
         {
             self select_menu_option();
@@ -255,30 +343,117 @@ function menu_navigation()
     }
 }
 
-// This function is called when the player selects a menu option, and it executes the corresponding action
 function select_menu_option()
 {
-	if (self.menu_selected == 0)
-	{
-		if (!isdefined(self.god_mode) || self.god_mode == false)
-		{
-			self.god_mode = true;
-			self EnableInvulnerability();
+    if (self.menu_submenu == "main")
+    {
+        // GOD MODE
+        if (self.menu_selected == 0)
+        {
+            if (!isdefined(self.god_mode) || self.god_mode == false)
+            {
+                self.god_mode = true;
+                self EnableInvulnerability();
 
-			IPrintLnBold("God Mode ON");
-		}
-		else 
-		{
-			self.god_mode = false;
-			self DisableInvulnerability();
+                IPrintLnBold("God Mode ON");
+            }
+            else
+            {
+                self.god_mode = false;
+                self DisableInvulnerability();
 
-			IPrintLnBold("God Mode OFF");
-		}
-	}
-	else if (self.menu_selected == 1)
-	{
-		self giveWeapon(GetWeapon("ray_gun"));
+                IPrintLnBold("God Mode OFF");
+            }
+        }
 
-		IPrintLnBold("Ray Gun Given!");
-	}
+        // WEAPONS
+        else if (self.menu_selected == 1)
+        {
+            self open_weapons_menu();
+        }
+
+        // UNLIMITED AMMO
+        else if (self.menu_selected == 2)
+        {
+            if (!self.unlimited_ammo_enabled)
+            {
+                self.unlimited_ammo_enabled = true;
+                IPrintLnBold("Unlimited Ammo ON");
+            }
+            else
+            {
+                self.unlimited_ammo_enabled = false;
+                IPrintLnBold("Unlimited Ammo OFF");
+            }
+        }
+    }
+
+    else if (self.menu_submenu == "weapons")
+    {
+        // RAY GUN
+        if (self.menu_selected == 0)
+        {
+            self giveWeapon(GetWeapon("ray_gun"));
+            IPrintLnBold("Ray Gun Given!");
+        }
+
+        // WUNDERWAFFE DG-2
+        else if (self.menu_selected == 1)
+        {
+            self giveWeapon(GetWeapon("tesla_gun"));
+            IPrintLnBold("Wunderwaffe DG-2 Given!");
+        }
+
+        // BACK
+        else if (self.menu_selected == 2)
+        {
+            self.menu_submenu = "main";
+            self.menu_selected = 0;
+
+            self.menu_options = [];
+
+            self.menu_options[0] = "God Mode";
+            self.menu_options[1] = "Weapons";
+            self.menu_options[2] = "Unlimited Ammo";
+
+            self update_menu_selector();
+        }
+    }
+}
+
+function open_weapons_menu()
+{
+    self.menu_submenu = "weapons";
+    self.menu_selected = 0;
+
+    self.menu_options = [];
+
+    self.menu_options[0] = "Ray Gun";
+    self.menu_options[1] = "Wunderwaffe DG-2";
+    self.menu_options[2] = "Back";
+
+    self update_menu_selector();
+}
+
+function unlimited_ammo()
+{
+    self endon("disconnect");
+
+    for (;;)
+    {
+        if (self.unlimited_ammo_enabled)
+        {
+            weapons = self GetWeaponsList(1);
+
+            for (x = 0; x < weapons.size; x++)
+            {
+                if (self HasWeapon(weapons[x]))
+                {
+                    self GiveMaxAmmo(weapons[x]);
+                }
+            }
+        }
+
+        wait 0.1;
+    }
 }
