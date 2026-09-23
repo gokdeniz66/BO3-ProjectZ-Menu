@@ -1,3 +1,7 @@
 rawfile,dummy.cfg
 scriptparsetree,scripts/zm/gametypes/_clientids.gsc
+scriptparsetree,scripts/zm/gametypes/_projectz_ammo.gsc
+scriptparsetree,scripts/zm/gametypes/_projectz_godmode.gsc
+scriptparsetree,scripts/zm/gametypes/_projectz_menu.gsc
+scriptparsetree,scripts/zm/gametypes/_projectz_weapons.gsc
 keyvaluepairs,zm_mod

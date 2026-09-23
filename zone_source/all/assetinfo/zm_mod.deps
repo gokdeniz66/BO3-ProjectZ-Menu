@@ -8,14 +8,23 @@ ignore_missing_shipped,core_common
 ignore_missing_shipped,zm_common
 ignore_missing_shipped,zm_patch
 scriptparsetree,scripts\zm\gametypes\_clientids.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_clientids.gsc,1790201638,
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_clientids.gsc,1790202336,
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\scripts\shared\shared.gsh,1786575594,
+scriptparsetree,scripts\zm\gametypes\_projectz_menu.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_menu.gsc,1790203287,
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\scripts\shared\shared.gsh,1786575594,
+scriptparsetree,scripts\zm\gametypes\_projectz_weapons.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_weapons.gsc,1790203305,
+scriptparsetree,scripts\zm\gametypes\_projectz_godmode.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_godmode.gsc,1790202385,
+scriptparsetree,scripts\zm\gametypes\_projectz_ammo.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_ammo.gsc,1790202400,
 rawfile,dummy.cfg
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\dummy.cfg,1786576812,
 texturecombo,zm_mod
 assetlist,zm_mod
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\gamedata\playeranim\playeranimtypes.txt,1786575639,
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\zone_source\zm_mod.zone,1790029105,824b6daf,10822092,3d2c9de2,66170025
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\zone_source\zm_mod.zone,1790203456,1ee0fe12,1e8f11a9,c76fb45c,252cb4b5
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\zone_source\zm_mod.class,1786575857,
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\zone_source\mod_default.class,1786576053,
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\zone_source\default.class,1786575209,

@@ -4,6 +4,10 @@
 #include "zm_mod.class"
 
 scriptparsetree,scripts\zm\gametypes\_clientids.gsc
+scriptparsetree,scripts\zm\gametypes\_projectz_menu.gsc
+scriptparsetree,scripts\zm\gametypes\_projectz_weapons.gsc
+scriptparsetree,scripts\zm\gametypes\_projectz_godmode.gsc
+scriptparsetree,scripts\zm\gametypes\_projectz_ammo.gsc
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 rawfile,dummy.cfg
