@@ -3,7 +3,7 @@
 
 function toggle()
 {
-    if (!isdefined(self.god_mode) || self.god_mode == false)
+    if (!self.god_mode)
     {
         self.god_mode = true;
         self EnableInvulnerability();

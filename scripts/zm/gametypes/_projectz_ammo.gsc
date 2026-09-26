@@ -16,7 +16,7 @@ function toggle()
 }
 
 
-function unlimited_ammo()
+function unlimited_ammo_monitor()
 {
     self endon("disconnect");
 

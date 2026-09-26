@@ -8,6 +8,7 @@
 #using scripts\zm\gametypes\_projectz_weapons;
 #using scripts\zm\gametypes\_projectz_godmode;
 #using scripts\zm\gametypes\_projectz_ammo;
+#using scripts\zm\gametypes\_projectz_superjump;
 
 #insert scripts\shared\shared.gsh;
 
@@ -22,9 +23,11 @@ function init_player()
 
     self.god_mode = false;
     self.unlimited_ammo_enabled = false;
+    self.superjump_enabled = false;
 
     self thread watch_menu_button();
-    self thread projectz_ammo::unlimited_ammo();
+    self thread projectz_ammo::unlimited_ammo_monitor();
+    self thread projectz_superjump::super_jump_monitor();
 }
 
 
@@ -65,9 +68,8 @@ function open_menu()
 
     self.menu_options = [];
 
-    self.menu_options[0] = "God Mode";
+    self.menu_options[0] = "Player Options";
     self.menu_options[1] = "Weapons";
-    self.menu_options[2] = "Unlimited Ammo";
 
     self thread create_menu_background();
     self thread create_menu();
@@ -118,14 +120,12 @@ function close_menu()
     }
 }
 
-
 function create_menu()
 {
     self.menu_title = hud::createserverfontstring("objective", 1.4);
     self.menu_title hud::setpoint("RIGHT", "CENTER", -190, -135);
     self.menu_title setText("^2PROJECTZ MENU");
 }
-
 
 function create_menu_options()
 {
@@ -136,38 +136,17 @@ function create_menu_options()
 
     self.menu_option_text[1] = hud::createserverfontstring("objective", 1.0);
     self.menu_option_text[1] hud::setpoint("RIGHT", "CENTER", -205, -45);
-
+    
     self.menu_option_text[2] = hud::createserverfontstring("objective", 1.0);
     self.menu_option_text[2] hud::setpoint("RIGHT", "CENTER", -205, -15);
 
     self.menu_option_text[3] = hud::createserverfontstring("objective", 1.0);
     self.menu_option_text[3] hud::setpoint("RIGHT", "CENTER", -205, 15);
 
-    self.menu_option_text[4] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[4] hud::setpoint("RIGHT", "CENTER", -205, 45);
-
-    self.menu_option_text[5] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[5] hud::setpoint("RIGHT", "CENTER", -205, 75);
-
-    self.menu_option_text[6] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[6] hud::setpoint("RIGHT", "CENTER", -205, 105);
-
-    self.menu_option_text[7] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[7] hud::setpoint("RIGHT", "CENTER", -205, 135);
-
-    self.menu_option_text[8] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[8] hud::setpoint("RIGHT", "CENTER", -205, 165);
-
-    self.menu_option_text[0] setText("God Mode");
+    self.menu_option_text[0] setText("Player Options >");
     self.menu_option_text[1] setText("Weapons >");
-    self.menu_option_text[2] setText("Unlimited Ammo");
-
+    self.menu_option_text[2] setText("");
     self.menu_option_text[3] setText("");
-    self.menu_option_text[4] setText("");
-    self.menu_option_text[5] setText("");
-    self.menu_option_text[6] setText("");
-    self.menu_option_text[7] setText("");
-    self.menu_option_text[8] setText("");
 }
 
 
@@ -193,30 +172,24 @@ function create_menu_selector()
 
 function update_menu_selector()
 {
+    // refresh menu option texts
+    self.menu_option_text[0] setText("");
+    self.menu_option_text[1] setText("");
+    self.menu_option_text[2] setText("");
+    self.menu_option_text[3] setText("");
+
     if (self.menu_submenu == "main")
     {
-        self.menu_option_text[0] setText("God Mode");
+        self.menu_option_text[0] setText("Player Options >");
         self.menu_option_text[1] setText("Weapons >");
-        self.menu_option_text[2] setText("Unlimited Ammo");
-
-        self.menu_option_text[3] setText("");
-        self.menu_option_text[4] setText("");
-        self.menu_option_text[5] setText("");
-        self.menu_option_text[6] setText("");
-        self.menu_option_text[7] setText("");
-        self.menu_option_text[8] setText("");
 
         if (self.menu_selected == 0)
         {
-            self.menu_option_text[0] setText("^2God Mode");
+            self.menu_option_text[0] setText("^2Player Options >");
         }
         else if (self.menu_selected == 1)
         {
             self.menu_option_text[1] setText("^2Weapons >");
-        }
-        else if (self.menu_selected == 2)
-        {
-            self.menu_option_text[2] setText("^2Unlimited Ammo");
         }
     }
 
@@ -225,12 +198,6 @@ function update_menu_selector()
         self.menu_option_text[0] setText("Ray Gun");
         self.menu_option_text[1] setText("Wunderwaffe DG-2");
         self.menu_option_text[2] setText("Back");
-
-        self.menu_option_text[3] setText("");
-        self.menu_option_text[4] setText("");
-        self.menu_option_text[5] setText("");
-        self.menu_option_text[6] setText("");
-        self.menu_option_text[7] setText("");
 
         if (self.menu_selected == 0)
         {
@@ -243,6 +210,31 @@ function update_menu_selector()
         else if (self.menu_selected == 2)
         {
             self.menu_option_text[2] setText("^2Back");
+        }
+    }
+
+    else if (self.menu_submenu == "Player Options") 
+    {
+        self.menu_option_text[0] setText("God Mode");
+        self.menu_option_text[1] setText("Unlimited Ammo");
+        self.menu_option_text[2] setText("Super Jump");
+        self.menu_option_text[3] setText("Back");
+   
+        if (self.menu_selected == 0)
+        {
+            self.menu_option_text[0] setText("^2God Mode");
+        }
+        else if (self.menu_selected == 1)
+        {
+            self.menu_option_text[1] setText("^2Unlimited Ammo");
+        }
+        else if (self.menu_selected == 2)
+        {
+            self.menu_option_text[2] setText("^2Super Jump");
+        }
+        else if (self.menu_selected == 3)
+        {
+            self.menu_option_text[3] setText("^2Back");
         }
     }
 
@@ -329,22 +321,50 @@ function select_menu_option()
 {
     if (self.menu_submenu == "main")
     {
+        // Player Option
+        if (self.menu_selected == 0)
+        {
+            self open_player_menu();
+        }
+        
+        // WEAPONS
+        else if (self.menu_selected == 1)
+        {
+            self open_weapons_menu();
+        }
+    }
+
+    else if (self.menu_submenu == "Player Options") 
+    {
         // GOD MODE
         if (self.menu_selected == 0)
         {
             self thread projectz_godmode::toggle();
         }
 
-        // WEAPONS
+        // Unlimited Ammo
         else if (self.menu_selected == 1)
         {
-            self open_weapons_menu();
+            self thread projectz_ammo::toggle();
         }
 
-        // UNLIMITED AMMO
         else if (self.menu_selected == 2)
         {
-            self thread projectz_ammo::toggle();
+            self thread projectz_superjump::toggle();
+        }
+
+        // BACK
+        else if (self.menu_selected == 3)
+        {
+            self.menu_submenu = "main";
+            self.menu_selected = 0;
+
+            self.menu_options = [];
+
+            self.menu_options[0] = "Player Options";
+            self.menu_options[1] = "Weapons";
+
+            self update_menu_selector();
         }
     }
 
@@ -370,15 +390,13 @@ function select_menu_option()
 
             self.menu_options = [];
 
-            self.menu_options[0] = "God Mode";
+            self.menu_options[0] = "Player Options";
             self.menu_options[1] = "Weapons";
-            self.menu_options[2] = "Unlimited Ammo";
 
             self update_menu_selector();
         }
     }
 }
-
 
 function open_weapons_menu()
 {
@@ -390,6 +408,21 @@ function open_weapons_menu()
     self.menu_options[0] = "Ray Gun";
     self.menu_options[1] = "Wunderwaffe DG-2";
     self.menu_options[2] = "Back";
+
+    self update_menu_selector();
+}
+
+function open_player_menu()
+{
+    self.menu_submenu = "Player Options";
+    self.menu_selected = 0;
+
+    self.menu_options = [];
+
+    self.menu_options[0] = "God Mode";
+    self.menu_options[1] = "Unlimited Ammo";
+    self.menu_options[2] = "Super Jump";
+    self.menu_options[3] = "Back";
 
     self update_menu_selector();
 }

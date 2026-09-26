@@ -42,5 +42,5 @@ function on_player_spawn()
 {
     level flag::wait_till("initial_blackscreen_passed");
 
-    IPrintLnBold("ProjectZ Modmenu!");
+    IPrintLnBold("ProjectZ Modmenu Loaded!");
 }
