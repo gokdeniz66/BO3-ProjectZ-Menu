@@ -21,10 +21,10 @@ function super_jump_monitor()
     for (;;)
     {
         if (self.superjump_enabled)
-        {
+        {            
             if (self JumpButtonPressed())
             {
-                self setVelocity((0, 0, 500));
+                self setVelocity((0, 0, 1000));
 
                 while (!self isOnGround())
                 {
@@ -40,4 +40,21 @@ function super_jump_monitor()
 
         wait 0.05;
     }
+}
+
+function disable_death_barriers()
+{
+    ents = GetEntArray();
+
+    for (i = 0; i < ents.size; i++)
+    {
+        if (isSubStr(ents[i].classname, "trigger_hurt"))
+        {
+            ents[i].origin = (0, 0, 9999999);
+        }
+    }
+
+    level.player_out_of_playable_area_monitor = false;
+
+    IPrintLnBold("Death Barriers Disabled");
 }

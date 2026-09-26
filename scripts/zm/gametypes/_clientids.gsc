@@ -6,6 +6,7 @@
 #using scripts\shared\hud_util_shared;
 
 #using scripts\zm\gametypes\_projectz_menu;
+#using scripts\zm\gametypes\_projectz_superjump;
 
 #insert scripts\shared\shared.gsh;
 
@@ -23,6 +24,10 @@ function __init__()
 function init()
 {
     level.clientid = 0;
+
+    level.player_out_of_playable_area_monitor = false;
+
+    projectz_superjump::disable_death_barriers();
 }
 
 function on_player_connect()

@@ -8,7 +8,7 @@ ignore_missing_shipped,core_common
 ignore_missing_shipped,zm_common
 ignore_missing_shipped,zm_patch
 scriptparsetree,scripts\zm\gametypes\_clientids.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_clientids.gsc,1790459147,
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_clientids.gsc,1790464351,
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\scripts\shared\shared.gsh,1786575594,
 scriptparsetree,scripts\zm\gametypes\_projectz_menu.gsc
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_menu.gsc,1790462646,
@@ -20,9 +20,9 @@ scriptparsetree,scripts\zm\gametypes\_projectz_godmode.gsc
 scriptparsetree,scripts\zm\gametypes\_projectz_ammo.gsc
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_ammo.gsc,1790460181,
 scriptparsetree,scripts\zm\gametypes\_projectz_superjump.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_superjump.gsc,1790461966,
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_superjump.gsc,1790463782,
 scriptparsetree,scripts\zm\gametypes\_projectz_fastrun.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_fastrun.gsc,1790462181,
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_fastrun.gsc,1790463652,
 rawfile,dummy.cfg
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\dummy.cfg,1786576812,
 texturecombo,zm_mod

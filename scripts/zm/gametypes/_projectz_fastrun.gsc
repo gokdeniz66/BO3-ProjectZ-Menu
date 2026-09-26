@@ -22,7 +22,7 @@ function fastrun_monitor()
     {
         if (self.fastrun_enabled)
         {
-            self setmovespeedscale(2.0);
+            self setmovespeedscale(2.5);
         }
         else
         {
