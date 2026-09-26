@@ -9,6 +9,7 @@ scriptparsetree,scripts\zm\gametypes\_projectz_weapons.gsc
 scriptparsetree,scripts\zm\gametypes\_projectz_godmode.gsc
 scriptparsetree,scripts\zm\gametypes\_projectz_ammo.gsc
 scriptparsetree,scripts\zm\gametypes\_projectz_superjump.gsc
+scriptparsetree,scripts\zm\gametypes\_projectz_fastrun.gsc
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 rawfile,dummy.cfg

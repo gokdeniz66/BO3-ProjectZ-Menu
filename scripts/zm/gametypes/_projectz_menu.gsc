@@ -9,11 +9,11 @@
 #using scripts\zm\gametypes\_projectz_godmode;
 #using scripts\zm\gametypes\_projectz_ammo;
 #using scripts\zm\gametypes\_projectz_superjump;
+#using scripts\zm\gametypes\_projectz_fastrun;
 
 #insert scripts\shared\shared.gsh;
 
 #namespace projectz_menu;
-
 
 function init_player()
 {
@@ -24,12 +24,13 @@ function init_player()
     self.god_mode = false;
     self.unlimited_ammo_enabled = false;
     self.superjump_enabled = false;
+    self.fastrun_enabled = false;
 
     self thread watch_menu_button();
     self thread projectz_ammo::unlimited_ammo_monitor();
     self thread projectz_superjump::super_jump_monitor();
+    self thread projectz_fastrun::fastrun_monitor();
 }
-
 
 function watch_menu_button()
 {
@@ -53,7 +54,6 @@ function watch_menu_button()
         wait 0.05;
     }
 }
-
 
 function open_menu()
 {
@@ -82,7 +82,6 @@ function open_menu()
 
     self thread menu_navigation();
 }
-
 
 function close_menu()
 {
@@ -142,13 +141,20 @@ function create_menu_options()
 
     self.menu_option_text[3] = hud::createserverfontstring("objective", 1.0);
     self.menu_option_text[3] hud::setpoint("RIGHT", "CENTER", -205, 15);
+    
+    self.menu_option_text[4] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[4] hud::setpoint("RIGHT", "CENTER", -205, 45);
+
+    self.menu_option_text[5] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[5] hud::setpoint("RIGHT", "CENTER", -205, 75);
 
     self.menu_option_text[0] setText("Player Options >");
     self.menu_option_text[1] setText("Weapons >");
     self.menu_option_text[2] setText("");
     self.menu_option_text[3] setText("");
+    self.menu_option_text[4] setText("");
+    self.menu_option_text[5] setText("");
 }
-
 
 function create_menu_background()
 {
@@ -159,7 +165,6 @@ function create_menu_background()
     self.menu_background.color = (0.02, 0.02, 0.02);
 }
 
-
 function create_menu_selector()
 {
     self.menu_selector = hud::createServerIcon("white", 250, 27);
@@ -169,7 +174,6 @@ function create_menu_selector()
     self.menu_selector.color = (0, 1, 0);
 }
 
-
 function update_menu_selector()
 {
     // refresh menu option texts
@@ -177,6 +181,8 @@ function update_menu_selector()
     self.menu_option_text[1] setText("");
     self.menu_option_text[2] setText("");
     self.menu_option_text[3] setText("");
+    self.menu_option_text[4] setText("");
+    self.menu_option_text[5] setText("");
 
     if (self.menu_submenu == "main")
     {
@@ -218,7 +224,8 @@ function update_menu_selector()
         self.menu_option_text[0] setText("God Mode");
         self.menu_option_text[1] setText("Unlimited Ammo");
         self.menu_option_text[2] setText("Super Jump");
-        self.menu_option_text[3] setText("Back");
+        self.menu_option_text[3] setText("Fast Run");
+        self.menu_option_text[4] setText("Back");
    
         if (self.menu_selected == 0)
         {
@@ -234,7 +241,11 @@ function update_menu_selector()
         }
         else if (self.menu_selected == 3)
         {
-            self.menu_option_text[3] setText("^2Back");
+            self.menu_option_text[3] setText("^2Fast Run");
+        }
+        else if (self.menu_selected == 4)
+        {
+            self.menu_option_text[4] setText("^2Back");
         }
     }
 
@@ -245,7 +256,6 @@ function update_menu_selector()
         -75 + (self.menu_selected * 30)
     );
 }
-
 
 function menu_navigation()
 {
@@ -316,7 +326,6 @@ function menu_navigation()
     }
 }
 
-
 function select_menu_option()
 {
     if (self.menu_submenu == "main")
@@ -348,13 +357,20 @@ function select_menu_option()
             self thread projectz_ammo::toggle();
         }
 
+        // Super Jump
         else if (self.menu_selected == 2)
         {
             self thread projectz_superjump::toggle();
         }
 
-        // BACK
+        // Fast Run
         else if (self.menu_selected == 3)
+        {
+            self thread projectz_fastrun::toggle();
+        }
+
+        // BACK
+        else if (self.menu_selected == 4)
         {
             self.menu_submenu = "main";
             self.menu_selected = 0;
@@ -422,7 +438,8 @@ function open_player_menu()
     self.menu_options[0] = "God Mode";
     self.menu_options[1] = "Unlimited Ammo";
     self.menu_options[2] = "Super Jump";
-    self.menu_options[3] = "Back";
+    self.menu_options[3] = "Fast Run";
+    self.menu_options[4] = "Back";
 
     self update_menu_selector();
 }

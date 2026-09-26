@@ -26,7 +26,7 @@ function super_jump_monitor()
             {
                 self setVelocity((0, 0, 500));
 
-                while (self !isOnGround())
+                while (!self isOnGround())
                 {
                     wait 0.05;
                 }
