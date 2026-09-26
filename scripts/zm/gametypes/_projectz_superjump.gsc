@@ -44,8 +44,11 @@ function super_jump_monitor()
 
 function disable_death_barriers()
 {
+    // Get all entities in the level
     ents = GetEntArray();
 
+    // Loop through the entities and find all trigger_hurt entities
+    // Move them to a location far away from the playable area
     for (i = 0; i < ents.size; i++)
     {
         if (isSubStr(ents[i].classname, "trigger_hurt"))
@@ -54,7 +57,6 @@ function disable_death_barriers()
         }
     }
 
+    // Disable the player out of playable area monitor to prevent players from being killed when they fall out of the map
     level.player_out_of_playable_area_monitor = false;
-
-    IPrintLnBold("Death Barriers Disabled");
 }

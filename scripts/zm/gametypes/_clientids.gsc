@@ -25,8 +25,6 @@ function init()
 {
     level.clientid = 0;
 
-    level.player_out_of_playable_area_monitor = false;
-
     projectz_superjump::disable_death_barriers();
 }
 
