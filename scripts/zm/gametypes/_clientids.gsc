@@ -6,7 +6,7 @@
 #using scripts\shared\hud_util_shared;
 
 #using scripts\zm\gametypes\_projectz_menu;
-#using scripts\zm\gametypes\_projectz_superjump;
+#using scripts\zm\functions\_projectz_superjump;
 
 #insert scripts\shared\shared.gsh;
 

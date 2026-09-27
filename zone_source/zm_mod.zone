@@ -5,15 +5,15 @@
 
 scriptparsetree,scripts\zm\gametypes\_clientids.gsc
 scriptparsetree,scripts\zm\gametypes\_projectz_menu.gsc
-scriptparsetree,scripts\zm\gametypes\_projectz_weapons.gsc
-scriptparsetree,scripts\zm\gametypes\_projectz_godmode.gsc
-scriptparsetree,scripts\zm\gametypes\_projectz_ammo.gsc
-scriptparsetree,scripts\zm\gametypes\_projectz_superjump.gsc
-scriptparsetree,scripts\zm\gametypes\_projectz_fastrun.gsc
-scriptparsetree,scripts\zm\gametypes\_projectz_rounds.gsc
-scriptparsetree,scripts\zm\gametypes\_projectz_points.gsc
-scriptparsetree,scripts\zm\gametypes\_projectz_perks.gsc
-scriptparsetree,scripts\zm\gametypes\_projectz_aimbot.gsc
+scriptparsetree,scripts\zm\functions\_projectz_weapons.gsc
+scriptparsetree,scripts\zm\functions\_projectz_godmode.gsc
+scriptparsetree,scripts\zm\functions\_projectz_ammo.gsc
+scriptparsetree,scripts\zm\functions\_projectz_superjump.gsc
+scriptparsetree,scripts\zm\functions\_projectz_fastrun.gsc
+scriptparsetree,scripts\zm\functions\_projectz_rounds.gsc
+scriptparsetree,scripts\zm\functions\_projectz_points.gsc
+scriptparsetree,scripts\zm\functions\_projectz_perks.gsc
+scriptparsetree,scripts\zm\functions\_projectz_aimbot.gsc
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 rawfile,dummy.cfg

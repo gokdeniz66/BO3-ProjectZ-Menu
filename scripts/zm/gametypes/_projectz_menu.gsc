@@ -5,15 +5,15 @@
 #using scripts\shared\hud_message_shared;
 #using scripts\shared\hud_util_shared;
 
-#using scripts\zm\gametypes\_projectz_weapons;
-#using scripts\zm\gametypes\_projectz_godmode;
-#using scripts\zm\gametypes\_projectz_ammo;
-#using scripts\zm\gametypes\_projectz_superjump;
-#using scripts\zm\gametypes\_projectz_fastrun;
-#using scripts\zm\gametypes\_projectz_rounds;
-#using scripts\zm\gametypes\_projectz_points;
-#using scripts\zm\gametypes\_projectz_perks;
-#using scripts\zm\gametypes\_projectz_aimbot;
+#using scripts\zm\functions\_projectz_weapons;
+#using scripts\zm\functions\_projectz_godmode;
+#using scripts\zm\functions\_projectz_ammo;
+#using scripts\zm\functions\_projectz_superjump;
+#using scripts\zm\functions\_projectz_fastrun;
+#using scripts\zm\functions\_projectz_rounds;
+#using scripts\zm\functions\_projectz_points;
+#using scripts\zm\functions\_projectz_perks;
+#using scripts\zm\functions\_projectz_aimbot;
 
 #insert scripts\shared\shared.gsh;
 

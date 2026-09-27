@@ -8,35 +8,35 @@ ignore_missing_shipped,core_common
 ignore_missing_shipped,zm_common
 ignore_missing_shipped,zm_patch
 scriptparsetree,scripts\zm\gametypes\_clientids.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_clientids.gsc,1790465436,
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_clientids.gsc,1790533209,
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\scripts\shared\shared.gsh,1786575594,
 scriptparsetree,scripts\zm\gametypes\_projectz_menu.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_menu.gsc,1790531466,
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_menu.gsc,1790533124,
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\scripts\shared\shared.gsh,1786575594,
-scriptparsetree,scripts\zm\gametypes\_projectz_weapons.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_weapons.gsc,1790204354,
-scriptparsetree,scripts\zm\gametypes\_projectz_godmode.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_godmode.gsc,1790459133,
-scriptparsetree,scripts\zm\gametypes\_projectz_ammo.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_ammo.gsc,1790460181,
-scriptparsetree,scripts\zm\gametypes\_projectz_superjump.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_superjump.gsc,1790465502,
-scriptparsetree,scripts\zm\gametypes\_projectz_fastrun.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_fastrun.gsc,1790463652,
-scriptparsetree,scripts\zm\gametypes\_projectz_rounds.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_rounds.gsc,1790466538,
-scriptparsetree,scripts\zm\gametypes\_projectz_points.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_points.gsc,1790468465,
-scriptparsetree,scripts\zm\gametypes\_projectz_perks.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_perks.gsc,1790468141,
-scriptparsetree,scripts\zm\gametypes\_projectz_aimbot.gsc
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\gametypes\_projectz_aimbot.gsc,1790470687,
+scriptparsetree,scripts\zm\functions\_projectz_weapons.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\functions\_projectz_weapons.gsc,1790204354,
+scriptparsetree,scripts\zm\functions\_projectz_godmode.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\functions\_projectz_godmode.gsc,1790459133,
+scriptparsetree,scripts\zm\functions\_projectz_ammo.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\functions\_projectz_ammo.gsc,1790460181,
+scriptparsetree,scripts\zm\functions\_projectz_superjump.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\functions\_projectz_superjump.gsc,1790465502,
+scriptparsetree,scripts\zm\functions\_projectz_fastrun.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\functions\_projectz_fastrun.gsc,1790463652,
+scriptparsetree,scripts\zm\functions\_projectz_rounds.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\functions\_projectz_rounds.gsc,1790466538,
+scriptparsetree,scripts\zm\functions\_projectz_points.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\functions\_projectz_points.gsc,1790468465,
+scriptparsetree,scripts\zm\functions\_projectz_perks.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\functions\_projectz_perks.gsc,1790468141,
+scriptparsetree,scripts\zm\functions\_projectz_aimbot.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\scripts\zm\functions\_projectz_aimbot.gsc,1790470687,
 rawfile,dummy.cfg
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\dummy.cfg,1786576812,
 texturecombo,zm_mod
 assetlist,zm_mod
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\raw\gamedata\playeranim\playeranimtypes.txt,1786575639,
-	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\zone_source\zm_mod.zone,1790469954,7c53779d,fdae8f22,369e4df3,3d48b312
+	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\mods\projectz\zone_source\zm_mod.zone,1790533244,366be843,ea7fc69c,19e0c625,ef2c5bb8
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\zone_source\zm_mod.class,1786575857,
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\zone_source\mod_default.class,1786576053,
 	file,D:\SteamLibrary\steamapps\common\Call of Duty Black Ops III\share\zone_source\default.class,1786575209,
