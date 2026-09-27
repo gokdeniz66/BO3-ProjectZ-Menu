@@ -74,14 +74,14 @@ function open_menu()
 
     self.menu_options = [];
 
-    self.menu_options[0] = "Player";
-    self.menu_options[1] = "Weapons";
-    self.menu_options[2] = "Zombies";
+    self.menu_options[0] = "Player Options >";
+    self.menu_options[1] = "Weapons Options >";
+    self.menu_options[2] = "Zombies Options >";
 
-    self thread create_menu_background();
-    self thread create_menu();
-    self thread create_menu_options();
-    self thread create_menu_selector();
+    self create_menu_background();
+    self create_menu();
+    self create_menu_options();
+    self create_menu_selector();
 
     wait 0.05;
 
@@ -124,13 +124,19 @@ function close_menu()
         self.menu_background destroy();
         self.menu_background = undefined;
     }
+
+    if (isdefined(self.menu_left_border))
+    {
+        self.menu_left_border destroy();
+        self.menu_left_border = undefined;
+    }
 }
 
 function create_menu()
 {
-    self.menu_title = hud::createserverfontstring("objective", 1.4);
-    self.menu_title hud::setpoint("RIGHT", "CENTER", -190, -135);
-    self.menu_title setText("^2PROJECTZ MENU");
+    self.menu_title = hud::createserverfontstring("objective", 1.7);
+    self.menu_title hud::setpoint("CENTER", "CENTER", 0, -115);
+    self.menu_title setText("^1PROJECTZ");
 }
 
 function create_menu_options()
@@ -138,38 +144,38 @@ function create_menu_options()
     self.menu_option_text = [];
 
     self.menu_option_text[0] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[0] hud::setpoint("RIGHT", "CENTER", -205, -75);
+    self.menu_option_text[0] hud::setpoint("CENTER", "CENTER", 0, -75);
 
     self.menu_option_text[1] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[1] hud::setpoint("RIGHT", "CENTER", -205, -45);
+    self.menu_option_text[1] hud::setpoint("CENTER", "CENTER", 0, -45);
     
     self.menu_option_text[2] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[2] hud::setpoint("RIGHT", "CENTER", -205, -15);
+    self.menu_option_text[2] hud::setpoint("CENTER", "CENTER", 0, -15);
 
     self.menu_option_text[3] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[3] hud::setpoint("RIGHT", "CENTER", -205, 15);
+    self.menu_option_text[3] hud::setpoint("CENTER", "CENTER", 0, 15);
     
     self.menu_option_text[4] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[4] hud::setpoint("RIGHT", "CENTER", -205, 45);
+    self.menu_option_text[4] hud::setpoint("CENTER", "CENTER", 0, 45);
 
     self.menu_option_text[5] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[5] hud::setpoint("RIGHT", "CENTER", -205, 75);
+    self.menu_option_text[5] hud::setpoint("CENTER", "CENTER", 0, 75);
     
     self.menu_option_text[6] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[6] hud::setpoint("RIGHT", "CENTER", -205, 105);
+    self.menu_option_text[6] hud::setpoint("CENTER", "CENTER", 0, 105);
     
     self.menu_option_text[7] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[7] hud::setpoint("RIGHT", "CENTER", -205, 135);
+    self.menu_option_text[7] hud::setpoint("CENTER", "CENTER", 0, 135);
     
     self.menu_option_text[8] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[8] hud::setpoint("RIGHT", "CENTER", -205, 165);
+    self.menu_option_text[8] hud::setpoint("CENTER", "CENTER", 0, 165);
     
     self.menu_option_text[9] = hud::createserverfontstring("objective", 1.0);
-    self.menu_option_text[9] hud::setpoint("RIGHT", "CENTER", -205, 195);
+    self.menu_option_text[9] hud::setpoint("CENTER", "CENTER", 0, 195);
 
-    self.menu_option_text[0] setText("Player >");
-    self.menu_option_text[1] setText("Weapons >");
-    self.menu_option_text[2] setText("Zombies >");
+    self.menu_option_text[0] setText("Player Options >");
+    self.menu_option_text[1] setText("Weapons Options >");
+    self.menu_option_text[2] setText("Zombies Options >");
     self.menu_option_text[3] setText("");
     self.menu_option_text[4] setText("");
     self.menu_option_text[5] setText("");
@@ -181,20 +187,26 @@ function create_menu_options()
 
 function create_menu_background()
 {
-    self.menu_background = hud::createServerIcon("white", 260, 330);
-    self.menu_background hud::setpoint("RIGHT", "CENTER", -170, 0);
+    self.menu_background = hud::createServerIcon("white", 220, 270);
+    self.menu_background hud::setpoint("CENTER", "CENTER", 0, 0);
 
     self.menu_background.alpha = 0.92;
     self.menu_background.color = (0.02, 0.02, 0.02);
+
+    self.menu_left_border = hud::createServerIcon("white", 4, 270);
+    self.menu_left_border hud::setpoint("CENTER", "CENTER", -108, 0);
+
+    self.menu_left_border.alpha = 1;
+    self.menu_left_border.color = (1, 0, 0);
 }
 
 function create_menu_selector()
 {
-    self.menu_selector = hud::createServerIcon("white", 250, 27);
-    self.menu_selector hud::setpoint("RIGHT", "CENTER", -190, -75);
+    self.menu_selector = hud::createServerIcon("white", 210, 27);
+    self.menu_selector hud::setpoint("CENTER", "CENTER", 0, -75);
 
     self.menu_selector.alpha = 0.25;
-    self.menu_selector.color = (0, 1, 0);
+    self.menu_selector.color = (1, 0, 1);
 }
 
 function update_menu_selector()
@@ -213,21 +225,21 @@ function update_menu_selector()
 
     if (self.menu_submenu == "main")
     {
-        self.menu_option_text[0] setText("Player >");
-        self.menu_option_text[1] setText("Weapons >");
-        self.menu_option_text[2] setText("Zombies >");
+        self.menu_option_text[0] setText("Player Options >");
+        self.menu_option_text[1] setText("Weapons Options >");
+        self.menu_option_text[2] setText("Zombies Options >");
 
         if (self.menu_selected == 0)
         {
-            self.menu_option_text[0] setText("^2Player >");
+            self.menu_option_text[0] setText("^1Player Options >");
         }
         else if (self.menu_selected == 1)
         {
-            self.menu_option_text[1] setText("^2Weapons >");
+            self.menu_option_text[1] setText("^1Weapons Options >");
         }
         else if (self.menu_selected == 2)
         {
-            self.menu_option_text[2] setText("^2Zombies >");
+            self.menu_option_text[2] setText("^1Zombies Options >");
         }
     }
 
@@ -239,15 +251,15 @@ function update_menu_selector()
 
         if (self.menu_selected == 0)
         {
-            self.menu_option_text[0] setText("^2Ray Gun");
+            self.menu_option_text[0] setText("^1Ray Gun");
         }
         else if (self.menu_selected == 1)
         {
-            self.menu_option_text[1] setText("^2Wunderwaffe DG-2");
+            self.menu_option_text[1] setText("^1Wunderwaffe DG-2");
         }
         else if (self.menu_selected == 2)
         {
-            self.menu_option_text[2] setText("^2Back");
+            self.menu_option_text[2] setText("^1Back");
         }
     }
 
@@ -263,31 +275,31 @@ function update_menu_selector()
 
         if (self.menu_selected == 0)
         {
-            self.menu_option_text[0] setText("^2God Mode");
+            self.menu_option_text[0] setText("^1God Mode");
         }
         else if (self.menu_selected == 1)
         {
-            self.menu_option_text[1] setText("^2Unlimited Ammo");
+            self.menu_option_text[1] setText("^1Unlimited Ammo");
         }
         else if (self.menu_selected == 2)
         {
-            self.menu_option_text[2] setText("^2Super Jump");
+            self.menu_option_text[2] setText("^1Super Jump");
         }
         else if (self.menu_selected == 3)
         {
-            self.menu_option_text[3] setText("^2Fast Run");
+            self.menu_option_text[3] setText("^1Fast Run");
         }
         else if (self.menu_selected == 4)
         {
-            self.menu_option_text[4] setText("^2Get All Perks");
+            self.menu_option_text[4] setText("^1Get All Perks");
         }
         else if (self.menu_selected == 5)
         {
-            self.menu_option_text[5] setText("^2Aimbot");
+            self.menu_option_text[5] setText("^1Aimbot");
         }
         else if (self.menu_selected == 6)
         {
-            self.menu_option_text[6] setText("^2Back");
+            self.menu_option_text[6] setText("^1Back");
         }
     }
 
@@ -299,22 +311,22 @@ function update_menu_selector()
 
         if (self.menu_selected == 0)
         {
-            self.menu_option_text[0] setText("^2Round 100");
+            self.menu_option_text[0] setText("^1Round 100");
         }
         else if (self.menu_selected == 1)
         {
-            self.menu_option_text[1] setText("^2Spawn Points");
+            self.menu_option_text[1] setText("^1Spawn Points");
         }
         else if (self.menu_selected == 2)
         {
-            self.menu_option_text[2] setText("^2Back");
+            self.menu_option_text[2] setText("^1Back");
         }
     }
 
     self.menu_selector hud::setpoint(
-        "RIGHT",
         "CENTER",
-        -190,
+        "CENTER",
+        0,
         -75 + (self.menu_selected * 30)
     );
 }
@@ -457,9 +469,9 @@ function select_menu_option()
 
             self.menu_options = [];
 
-            self.menu_options[0] = "Player";
-            self.menu_options[1] = "Weapons";
-            self.menu_options[2] = "Zombies";
+            self.menu_options[0] = "Player Options >";
+            self.menu_options[1] = "Weapons Options >";
+            self.menu_options[2] = "Zombies Options >";
 
             self update_menu_selector();
         }
@@ -487,9 +499,9 @@ function select_menu_option()
 
             self.menu_options = [];
 
-            self.menu_options[0] = "Player";
-            self.menu_options[1] = "Weapons";
-            self.menu_options[2] = "Zombies";
+            self.menu_options[0] = "Player Options >";
+            self.menu_options[1] = "Weapons Options >";
+            self.menu_options[2] = "Zombies Options >";
 
             self update_menu_selector();
         }
@@ -517,9 +529,9 @@ function select_menu_option()
 
             self.menu_options = [];
 
-            self.menu_options[0] = "Player";
-            self.menu_options[1] = "Weapons";
-            self.menu_options[2] = "Zombies";
+            self.menu_options[0] = "Player Options >";
+            self.menu_options[1] = "Weapons Options >";
+            self.menu_options[2] = "Zombies Options >";
 
             self update_menu_selector();
         }
