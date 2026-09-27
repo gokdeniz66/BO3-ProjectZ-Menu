@@ -10,6 +10,7 @@
 #using scripts\zm\gametypes\_projectz_ammo;
 #using scripts\zm\gametypes\_projectz_superjump;
 #using scripts\zm\gametypes\_projectz_fastrun;
+#using scripts\zm\gametypes\_projectz_rounds;
 
 #insert scripts\shared\shared.gsh;
 
@@ -68,8 +69,9 @@ function open_menu()
 
     self.menu_options = [];
 
-    self.menu_options[0] = "Player Options";
+    self.menu_options[0] = "Player";
     self.menu_options[1] = "Weapons";
+    self.menu_options[2] = "Zombies";
 
     self thread create_menu_background();
     self thread create_menu();
@@ -147,13 +149,17 @@ function create_menu_options()
 
     self.menu_option_text[5] = hud::createserverfontstring("objective", 1.0);
     self.menu_option_text[5] hud::setpoint("RIGHT", "CENTER", -205, 75);
+    
+    self.menu_option_text[6] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[6] hud::setpoint("RIGHT", "CENTER", -205, 105);
 
-    self.menu_option_text[0] setText("Player Options >");
+    self.menu_option_text[0] setText("Player >");
     self.menu_option_text[1] setText("Weapons >");
-    self.menu_option_text[2] setText("");
+    self.menu_option_text[2] setText("Zombies >");
     self.menu_option_text[3] setText("");
     self.menu_option_text[4] setText("");
     self.menu_option_text[5] setText("");
+    self.menu_option_text[6] setText("");
 }
 
 function create_menu_background()
@@ -183,19 +189,26 @@ function update_menu_selector()
     self.menu_option_text[3] setText("");
     self.menu_option_text[4] setText("");
     self.menu_option_text[5] setText("");
+    self.menu_option_text[6] setText("");
+    
 
     if (self.menu_submenu == "main")
     {
-        self.menu_option_text[0] setText("Player Options >");
+        self.menu_option_text[0] setText("Player >");
         self.menu_option_text[1] setText("Weapons >");
+        self.menu_option_text[2] setText("Zombies >");
 
         if (self.menu_selected == 0)
         {
-            self.menu_option_text[0] setText("^2Player Options >");
+            self.menu_option_text[0] setText("^2Player >");
         }
         else if (self.menu_selected == 1)
         {
             self.menu_option_text[1] setText("^2Weapons >");
+        }
+        else if (self.menu_selected == 2)
+        {
+            self.menu_option_text[2] setText("^2Zombies >");
         }
     }
 
@@ -219,7 +232,7 @@ function update_menu_selector()
         }
     }
 
-    else if (self.menu_submenu == "Player Options") 
+    else if (self.menu_submenu == "Player") 
     {
         self.menu_option_text[0] setText("God Mode");
         self.menu_option_text[1] setText("Unlimited Ammo");
@@ -246,6 +259,21 @@ function update_menu_selector()
         else if (self.menu_selected == 4)
         {
             self.menu_option_text[4] setText("^2Back");
+        }
+    }
+
+    else if (self.menu_submenu == "Zombies")
+    {
+        self.menu_option_text[0] setText("Round 100");
+        self.menu_option_text[1] setText("Back");
+
+        if (self.menu_selected == 0)
+        {
+            self.menu_option_text[0] setText("^2Round 100");
+        }
+        else if (self.menu_selected == 1)
+        {
+            self.menu_option_text[1] setText("^2Back");
         }
     }
 
@@ -341,9 +369,15 @@ function select_menu_option()
         {
             self open_weapons_menu();
         }
+
+        // ZOMBIES
+        else if (self.menu_selected == 2)
+        {
+            self open_zombies_menu();
+        }
     }
 
-    else if (self.menu_submenu == "Player Options") 
+    else if (self.menu_submenu == "Player") 
     {
         // GOD MODE
         if (self.menu_selected == 0)
@@ -377,7 +411,7 @@ function select_menu_option()
 
             self.menu_options = [];
 
-            self.menu_options[0] = "Player Options";
+            self.menu_options[0] = "Player";
             self.menu_options[1] = "Weapons";
 
             self update_menu_selector();
@@ -406,8 +440,32 @@ function select_menu_option()
 
             self.menu_options = [];
 
-            self.menu_options[0] = "Player Options";
+            self.menu_options[0] = "Player";
             self.menu_options[1] = "Weapons";
+
+            self update_menu_selector();
+        }
+    }
+
+    else if (self.menu_submenu == "Zombies")
+    {
+        // Round 100
+        if (self.menu_selected == 0)
+        {
+            self thread projectz_rounds::toggle();
+        }
+
+        // BACK
+        else if (self.menu_selected == 1)
+        {
+            self.menu_submenu = "main";
+            self.menu_selected = 0;
+
+            self.menu_options = [];
+
+            self.menu_options[0] = "Player";
+            self.menu_options[1] = "Weapons";
+            self.menu_options[2] = "Zombies";
 
             self update_menu_selector();
         }
@@ -430,7 +488,7 @@ function open_weapons_menu()
 
 function open_player_menu()
 {
-    self.menu_submenu = "Player Options";
+    self.menu_submenu = "Player";
     self.menu_selected = 0;
 
     self.menu_options = [];
@@ -440,6 +498,19 @@ function open_player_menu()
     self.menu_options[2] = "Super Jump";
     self.menu_options[3] = "Fast Run";
     self.menu_options[4] = "Back";
+
+    self update_menu_selector();
+}
+
+function open_zombies_menu()
+{
+    self.menu_submenu = "Zombies";
+    self.menu_selected = 0;
+
+    self.menu_options = [];
+
+    self.menu_options[0] = "Round 100";
+    self.menu_options[1] = "Back";
 
     self update_menu_selector();
 }

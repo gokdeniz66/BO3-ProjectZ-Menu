@@ -4,6 +4,7 @@ scriptparsetree,scripts/zm/gametypes/_projectz_ammo.gsc
 scriptparsetree,scripts/zm/gametypes/_projectz_fastrun.gsc
 scriptparsetree,scripts/zm/gametypes/_projectz_godmode.gsc
 scriptparsetree,scripts/zm/gametypes/_projectz_menu.gsc
+scriptparsetree,scripts/zm/gametypes/_projectz_rounds.gsc
 scriptparsetree,scripts/zm/gametypes/_projectz_superjump.gsc
 scriptparsetree,scripts/zm/gametypes/_projectz_weapons.gsc
 keyvaluepairs,zm_mod
