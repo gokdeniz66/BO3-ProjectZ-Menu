@@ -13,6 +13,7 @@ scriptparsetree,scripts\zm\gametypes\_projectz_fastrun.gsc
 scriptparsetree,scripts\zm\gametypes\_projectz_rounds.gsc
 scriptparsetree,scripts\zm\gametypes\_projectz_points.gsc
 scriptparsetree,scripts\zm\gametypes\_projectz_perks.gsc
+scriptparsetree,scripts\zm\gametypes\_projectz_aimbot.gsc
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 rawfile,dummy.cfg

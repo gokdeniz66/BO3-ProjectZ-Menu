@@ -13,6 +13,7 @@
 #using scripts\zm\gametypes\_projectz_rounds;
 #using scripts\zm\gametypes\_projectz_points;
 #using scripts\zm\gametypes\_projectz_perks;
+#using scripts\zm\gametypes\_projectz_aimbot;
 
 #insert scripts\shared\shared.gsh;
 
@@ -28,11 +29,13 @@ function init_player()
     self.unlimited_ammo_enabled = false;
     self.superjump_enabled = false;
     self.fastrun_enabled = false;
+    self.aimbot_enabled = false;
 
     self thread watch_menu_button();
     self thread projectz_ammo::unlimited_ammo_monitor();
     self thread projectz_superjump::super_jump_monitor();
     self thread projectz_fastrun::fastrun_monitor();
+    self thread projectz_aimbot::aimbot_monitor();
 }
 
 function watch_menu_button()
@@ -160,6 +163,9 @@ function create_menu_options()
     
     self.menu_option_text[8] = hud::createserverfontstring("objective", 1.0);
     self.menu_option_text[8] hud::setpoint("RIGHT", "CENTER", -205, 165);
+    
+    self.menu_option_text[9] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[9] hud::setpoint("RIGHT", "CENTER", -205, 195);
 
     self.menu_option_text[0] setText("Player >");
     self.menu_option_text[1] setText("Weapons >");
@@ -170,6 +176,7 @@ function create_menu_options()
     self.menu_option_text[6] setText("");
     self.menu_option_text[7] setText("");
     self.menu_option_text[8] setText("");
+    self.menu_option_text[9] setText("");
 }
 
 function create_menu_background()
@@ -202,6 +209,7 @@ function update_menu_selector()
     self.menu_option_text[6] setText("");
     self.menu_option_text[7] setText("");
     self.menu_option_text[8] setText("");
+    self.menu_option_text[9] setText("");
 
     if (self.menu_submenu == "main")
     {
@@ -250,8 +258,9 @@ function update_menu_selector()
         self.menu_option_text[2] setText("Super Jump");
         self.menu_option_text[3] setText("Fast Run");
         self.menu_option_text[4] setText("Get All Perks");
-        self.menu_option_text[5] setText("Back");
-   
+        self.menu_option_text[5] setText("Aimbot");
+        self.menu_option_text[6] setText("Back");
+
         if (self.menu_selected == 0)
         {
             self.menu_option_text[0] setText("^2God Mode");
@@ -274,7 +283,11 @@ function update_menu_selector()
         }
         else if (self.menu_selected == 5)
         {
-            self.menu_option_text[5] setText("^2Back");
+            self.menu_option_text[5] setText("^2Aimbot");
+        }
+        else if (self.menu_selected == 6)
+        {
+            self.menu_option_text[6] setText("^2Back");
         }
     }
 
@@ -430,8 +443,14 @@ function select_menu_option()
             self thread projectz_perks::toggle();
         }
 
-        // BACK
+        // Aimbot
         else if (self.menu_selected == 5)
+        {
+            self thread projectz_aimbot::toggle();
+        }
+
+        // BACK
+        else if (self.menu_selected == 6)
         {
             self.menu_submenu = "main";
             self.menu_selected = 0;
@@ -533,7 +552,8 @@ function open_player_menu()
     self.menu_options[2] = "Super Jump";
     self.menu_options[3] = "Fast Run";
     self.menu_options[4] = "Get All Perks";
-    self.menu_options[5] = "Back";
+    self.menu_options[5] = "Aimbot";
+    self.menu_options[6] = "Back";
 
     self update_menu_selector();
 }
