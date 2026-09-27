@@ -11,6 +11,8 @@
 #using scripts\zm\gametypes\_projectz_superjump;
 #using scripts\zm\gametypes\_projectz_fastrun;
 #using scripts\zm\gametypes\_projectz_rounds;
+#using scripts\zm\gametypes\_projectz_points;
+#using scripts\zm\gametypes\_projectz_perks;
 
 #insert scripts\shared\shared.gsh;
 
@@ -152,6 +154,12 @@ function create_menu_options()
     
     self.menu_option_text[6] = hud::createserverfontstring("objective", 1.0);
     self.menu_option_text[6] hud::setpoint("RIGHT", "CENTER", -205, 105);
+    
+    self.menu_option_text[7] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[7] hud::setpoint("RIGHT", "CENTER", -205, 135);
+    
+    self.menu_option_text[8] = hud::createserverfontstring("objective", 1.0);
+    self.menu_option_text[8] hud::setpoint("RIGHT", "CENTER", -205, 165);
 
     self.menu_option_text[0] setText("Player >");
     self.menu_option_text[1] setText("Weapons >");
@@ -160,6 +168,8 @@ function create_menu_options()
     self.menu_option_text[4] setText("");
     self.menu_option_text[5] setText("");
     self.menu_option_text[6] setText("");
+    self.menu_option_text[7] setText("");
+    self.menu_option_text[8] setText("");
 }
 
 function create_menu_background()
@@ -190,7 +200,8 @@ function update_menu_selector()
     self.menu_option_text[4] setText("");
     self.menu_option_text[5] setText("");
     self.menu_option_text[6] setText("");
-    
+    self.menu_option_text[7] setText("");
+    self.menu_option_text[8] setText("");
 
     if (self.menu_submenu == "main")
     {
@@ -238,7 +249,8 @@ function update_menu_selector()
         self.menu_option_text[1] setText("Unlimited Ammo");
         self.menu_option_text[2] setText("Super Jump");
         self.menu_option_text[3] setText("Fast Run");
-        self.menu_option_text[4] setText("Back");
+        self.menu_option_text[4] setText("Get All Perks");
+        self.menu_option_text[5] setText("Back");
    
         if (self.menu_selected == 0)
         {
@@ -258,14 +270,19 @@ function update_menu_selector()
         }
         else if (self.menu_selected == 4)
         {
-            self.menu_option_text[4] setText("^2Back");
+            self.menu_option_text[4] setText("^2Get All Perks");
+        }
+        else if (self.menu_selected == 5)
+        {
+            self.menu_option_text[5] setText("^2Back");
         }
     }
 
     else if (self.menu_submenu == "Zombies")
     {
         self.menu_option_text[0] setText("Round 100");
-        self.menu_option_text[1] setText("Back");
+        self.menu_option_text[1] setText("Spawn Points");
+        self.menu_option_text[2] setText("Back");
 
         if (self.menu_selected == 0)
         {
@@ -273,7 +290,11 @@ function update_menu_selector()
         }
         else if (self.menu_selected == 1)
         {
-            self.menu_option_text[1] setText("^2Back");
+            self.menu_option_text[1] setText("^2Spawn Points");
+        }
+        else if (self.menu_selected == 2)
+        {
+            self.menu_option_text[2] setText("^2Back");
         }
     }
 
@@ -403,8 +424,14 @@ function select_menu_option()
             self thread projectz_fastrun::toggle();
         }
 
-        // BACK
+        // Get All Perks
         else if (self.menu_selected == 4)
+        {
+            self thread projectz_perks::toggle();
+        }
+
+        // BACK
+        else if (self.menu_selected == 5)
         {
             self.menu_submenu = "main";
             self.menu_selected = 0;
@@ -413,6 +440,7 @@ function select_menu_option()
 
             self.menu_options[0] = "Player";
             self.menu_options[1] = "Weapons";
+            self.menu_options[2] = "Zombies";
 
             self update_menu_selector();
         }
@@ -442,6 +470,7 @@ function select_menu_option()
 
             self.menu_options[0] = "Player";
             self.menu_options[1] = "Weapons";
+            self.menu_options[2] = "Zombies";
 
             self update_menu_selector();
         }
@@ -455,8 +484,14 @@ function select_menu_option()
             self thread projectz_rounds::toggle();
         }
 
-        // BACK
+        // Spawn Points
         else if (self.menu_selected == 1)
+        {
+            self thread projectZ_points::toggle();
+        }
+
+        // BACK
+        else if (self.menu_selected == 2)
         {
             self.menu_submenu = "main";
             self.menu_selected = 0;
@@ -497,7 +532,8 @@ function open_player_menu()
     self.menu_options[1] = "Unlimited Ammo";
     self.menu_options[2] = "Super Jump";
     self.menu_options[3] = "Fast Run";
-    self.menu_options[4] = "Back";
+    self.menu_options[4] = "Get All Perks";
+    self.menu_options[5] = "Back";
 
     self update_menu_selector();
 }
@@ -510,7 +546,8 @@ function open_zombies_menu()
     self.menu_options = [];
 
     self.menu_options[0] = "Round 100";
-    self.menu_options[1] = "Back";
+    self.menu_options[1] = "Spawn Points";
+    self.menu_options[2] = "Back";
 
     self update_menu_selector();
 }

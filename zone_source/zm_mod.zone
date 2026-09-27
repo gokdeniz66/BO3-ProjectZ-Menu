@@ -11,6 +11,8 @@ scriptparsetree,scripts\zm\gametypes\_projectz_ammo.gsc
 scriptparsetree,scripts\zm\gametypes\_projectz_superjump.gsc
 scriptparsetree,scripts\zm\gametypes\_projectz_fastrun.gsc
 scriptparsetree,scripts\zm\gametypes\_projectz_rounds.gsc
+scriptparsetree,scripts\zm\gametypes\_projectz_points.gsc
+scriptparsetree,scripts\zm\gametypes\_projectz_perks.gsc
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 rawfile,dummy.cfg
